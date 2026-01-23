@@ -72,6 +72,15 @@
 <p align="center">
 <img src="https://github-readme-stats.vercel.app/api?username=arminkhorami&show_icons=true&locale=en" alt="arminkhorami stats"/>
 <img src="https://github-readme-stats.vercel.app/api/top-langs?username=arminkhorami&show_icons=true&locale=en&layout=compact" alt="arminkhorami top langs"/>
+  <p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=arminkhorami&show_icons=true&locale=en" alt="arminkhorami stats"/>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=arminkhorami&show_icons=true&locale=en&layout=compact" alt="arminkhorami top langs"/>
+</p>
+
+<p align="center">
+  ![My Repos](https://github-readme-repo-grid.vercel.app/?username=arminkhorami&cols=3&count=12)
+</p>
+
 <p align="center">
   <img 
     src="https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/2026-%20AM%20A(1).webp"
