@@ -49,7 +49,14 @@
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/> 
 <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes"/> 
 
+
 ---
+![Snake](https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/github-ama-grid-snake.svg)
+
+---
+
+---
+
 
 ## 🌐 Connect with Me
 <p align="left">
