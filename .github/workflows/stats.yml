@@ -1,10 +1,10 @@
-name: Generate GitHub Stats Cards
+name: GitHub Stats Bar Chart
 permissions:
   contents: write
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: "0 0 * * *" # اجرا هر شب ساعت ۱۲
+  workflow_dispatch:      # قابلیت اجرای دستی
 
 jobs:
   build:
@@ -17,77 +17,109 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install requests matplotlib cairosvg
+        run: pip install requests matplotlib
 
-      - name: Generate Stats Cards
+      - name: Generate Stats Chart
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           python << 'EOF'
-          import requests, os
-          from collections import defaultdict
+          import requests
+          import os
           import matplotlib.pyplot as plt
-          import cairosvg
+          from collections import defaultdict
 
           USERNAME = "arminkhorami"
-          TOKEN = os.environ["GH_TOKEN"]
+          TOKEN = os.environ.get("GH_TOKEN")
+          
+          if not TOKEN:
+              raise Exception("GH_TOKEN is missing!")
+
           headers = {"Authorization": f"token {TOKEN}"}
 
-          # ---------- جمع آوری داده ----------
+          # ---------- 1. جمع‌آوری داده‌ها ----------
           repos_url = "https://api.github.com/user/repos?per_page=100&type=all"
           language_totals = defaultdict(int)
-          total_repos = 0
-          total_stars = 0
-
+          
+          print("Fetching repositories...")
           while repos_url:
-              r = requests.get(repos_url, headers=headers)
-              repos = r.json()
-              total_repos += len(repos)
-              for repo in repos:
-                  total_stars += repo.get("stargazers_count", 0)
-                  langs = requests.get(repo["languages_url"], headers=headers).json()
-                  for lang, size in langs.items():
-                      language_totals[lang] += size
-              repos_url = r.links.get("next", {}).get("url")
+              try:
+                  r = requests.get(repos_url, headers=headers)
+                  if r.status_code != 200: break
+                  repos = r.json()
+                  
+                  for repo in repos:
+                      if repo.get("fork"): continue # اگر نمی‌خواهید ریپوهای فورک شده حساب شوند
+                      
+                      lang_url = repo.get("languages_url")
+                      if lang_url:
+                          lang_data = requests.get(lang_url, headers=headers).json()
+                          for lang, size in lang_data.items():
+                              language_totals[lang] += size
+                              
+                  repos_url = r.links.get("next", {}).get("url")
+              except:
+                  break
 
-          # ---------- Top 6 زبان + Other ----------
+          # ---------- 2. پردازش داده‌ها (Top 5 + Other) ----------
+          # مرتب‌سازی نزولی
           sorted_langs = sorted(language_totals.items(), key=lambda x: x[1], reverse=True)
-          top_langs = sorted_langs[:6]
-          other_bytes = sum(size for _, size in sorted_langs[6:])
+          
+          # فقط 5 زبان اول را نگه دار، بقیه را Other کن
+          limit = 5
+          top_langs = sorted_langs[:limit]
+          other_bytes = sum(size for _, size in sorted_langs[limit:])
           if other_bytes > 0:
               top_langs.append(("Other", other_bytes))
 
+          # آماده‌سازی برای نمودار (معکوس می‌کنیم تا زبان محبوب بالا باشد)
+          top_langs.reverse() 
           labels = [lang for lang, _ in top_langs]
           sizes = [size for _, size in top_langs]
+          total_bytes = sum(sizes) if sum(sizes) > 0 else 1
+          percentages = [s/total_bytes*100 for s in sizes]
 
-          # ---------- جدول Markdown ----------
-          md = f"## 🧠 GitHub Stats for {USERNAME}\n\n"
-          md += f"- Total Repos: {total_repos}\n"
-          md += f"- Total Stars: {total_stars}\n\n"
-          md += "| Language | Usage |\n|----------|-------|\n"
-          total_bytes = sum(sizes)
-          for label, size in zip(labels, sizes):
-              md += f"| {label} | {size/total_bytes*100:.2f}% |\n"
+          # ---------- 3. رسم نمودار میله‌ای (Bar Chart) ----------
+          # تنظیم رنگ‌ها و استایل
+          bg_color = '#0d1117' # رنگ پس‌زمینه دارک گیت‌هاب
+          text_color = '#c9d1d9' # رنگ متن پیش‌فرض گیت‌هاب
+          bar_colors = ['#8b949e', '#58a6ff', '#3fb950', '#d29922', '#f85149', '#a371f7'] # رنگ‌های گیت‌هابی
+          
+          # سایز مستطیلی (عرض 10، ارتفاع 4)
+          fig, ax = plt.subplots(figsize=(10, 4))
+          fig.patch.set_facecolor(bg_color)
+          ax.set_facecolor(bg_color)
 
-          with open("LANG_STATS.md", "w") as f:
-              f.write(md)
+          # رسم میله‌ها
+          bars = ax.barh(labels, percentages, color=bar_colors[:len(labels)], height=0.6)
 
-          # ---------- Pie Chart ----------
-          plt.style.use('dark_background')
-          colors = ['#1f77b4','#ff7f0e','#2ca02c','#d62728','#9467bd','#8c564b','#e377c2']
-          plt.figure(figsize=(6,6))
-          plt.pie([s/total_bytes*100 for s in sizes], labels=labels,
-                  autopct='%1.1f%%', startangle=140, colors=colors[:len(labels)])
-          plt.title(f"{USERNAME} Languages Usage", color="white")
-          plt.savefig("lang_chart.svg", format="svg", facecolor='#0d1117', bbox_inches='tight')
-          plt.close()
+          # حذف خطوط دور نمودار (Border)
+          for spine in ax.spines.values():
+              spine.set_visible(False)
+
+          # تنظیمات محورها
+          ax.xaxis.set_visible(False) # حذف اعداد پایین
+          ax.tick_params(axis='y', colors=text_color, labelsize=12, length=0) # تنظیم فونت لیبل‌ها
+
+          # اضافه کردن درصد جلوی هر میله
+          for bar, percent in zip(bars, percentages):
+              width = bar.get_width()
+              label_x_pos = width + 1  # کمی جلوتر از میله
+              ax.text(label_x_pos, bar.get_y() + bar.get_height()/2, f'{percent:.1f}%', 
+                      va='center', color=text_color, fontweight='bold')
+
+          plt.title(f"Most Used Languages by {USERNAME}", color=text_color, pad=20, fontsize=14)
+          plt.tight_layout()
+
+          # ذخیره فایل SVG
+          plt.savefig("lang_chart.svg", format="svg", facecolor=bg_color, bbox_inches='tight')
+          print("Chart generated successfully.")
           EOF
 
-      - name: Commit Cards
+      - name: Commit and Push
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add LANG_STATS.md lang_chart.svg
-          git commit -m "Update GitHub Stats Cards" || echo "No changes"
-          git pull --rebase
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lang_chart.svg
+          git commit -m "Update Stats Chart 📊" || echo "No changes"
           git push
