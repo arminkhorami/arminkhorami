@@ -74,10 +74,9 @@
 
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=arminkhorami&theme=github_dark" />
 
-![Language Chart](lang_chart.svg)
+<img src="github_stats.svg" alt="GitHub Stats Card" />
 
-<!-- جدول آمار زبان‌ها -->
-{% include_relative LANG_STATS.md %}
+<img src="lang_chart.svg" alt="Languages Usage Chart" />
 
 <p align="center">
   <img 
