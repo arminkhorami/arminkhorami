@@ -22,11 +22,12 @@ jobs:
       - name: Install dependencies
         run: pip install requests matplotlib
 
-      - name: Generate Stats + Chart
+      - name: Generate Stats + Pie Chart
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           python << 'EOF'
+          # --- کد Python حرفه‌ای Top6 + Other + Dark Pie Chart ---
           import requests, os, matplotlib.pyplot as plt
           from collections import defaultdict
 
@@ -40,36 +41,37 @@ jobs:
           while repos_url:
               r = requests.get(repos_url, headers=headers)
               repos = r.json()
-
               for repo in repos:
                   langs = requests.get(repo["languages_url"], headers=headers).json()
                   for lang, size in langs.items():
                       language_totals[lang] += size
-
               repos_url = r.links.get("next", {}).get("url")
 
-          total = sum(language_totals.values())
           sorted_langs = sorted(language_totals.items(), key=lambda x: x[1], reverse=True)
+          total_bytes = sum(language_totals.values())
 
-          # ---------- Markdown Table ----------
+          top_langs = sorted_langs[:6]
+          other_bytes = sum(size for _, size in sorted_langs[6:])
+          if other_bytes > 0:
+              top_langs.append(("Other", other_bytes))
+
+          labels = [lang for lang, _ in top_langs]
+          sizes = [size / total_bytes * 100 for _, size in top_langs]
+
           md = "## 🧠 Total Coding Activity (All Repos)\n\n"
           md += "| Language | Usage |\n|----------|-------|\n"
-          labels, sizes = [], []
-
-          for lang, size in sorted_langs:
-              percent = (size / total) * 100
-              md += f"| {lang} | {percent:.2f}% |\n"
-              labels.append(lang)
-              sizes.append(percent)
-
+          for label, percent in zip(labels, sizes):
+              md += f"| {label} | {percent:.2f}% |\n"
           with open("LANG_STATS.md", "w") as f:
               f.write(md)
 
-          # ---------- Pie Chart ----------
+          plt.style.use('dark_background')
+          colors = ['#1f77b4','#ff7f0e','#2ca02c','#d62728','#9467bd','#8c564b','#e377c2']
           plt.figure(figsize=(6,6))
-          plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
-          plt.title("Languages Usage (All Repositories)")
-          plt.savefig("lang_chart.svg", format="svg")
+          plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140, colors=colors[:len(labels)])
+          plt.title("Languages Usage (All Repositories)", color="white")
+          plt.savefig("lang_chart.svg", format="svg", facecolor='#0d1117', bbox_inches='tight')
+          plt.close()
           EOF
 
       - name: Commit results
