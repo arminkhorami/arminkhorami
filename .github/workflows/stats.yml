@@ -1,4 +1,4 @@
-name: Update GitHub Stats
+name: Generate GitHub Stats Cards
 permissions:
   contents: write
 on:
@@ -9,76 +9,85 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install requests matplotlib
+        run: pip install requests matplotlib cairosvg
 
-      - name: Generate Stats + Pie Chart
+      - name: Generate Stats Cards
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           python << 'EOF'
-          # --- کد Python حرفه‌ای Top6 + Other + Dark Pie Chart ---
-          import requests, os, matplotlib.pyplot as plt
+          import requests, os
           from collections import defaultdict
+          import matplotlib.pyplot as plt
+          import cairosvg
 
           USERNAME = "arminkhorami"
           TOKEN = os.environ["GH_TOKEN"]
           headers = {"Authorization": f"token {TOKEN}"}
 
+          # ---------- جمع آوری داده ----------
           repos_url = "https://api.github.com/user/repos?per_page=100&type=all"
           language_totals = defaultdict(int)
+          total_repos = 0
+          total_stars = 0
 
           while repos_url:
               r = requests.get(repos_url, headers=headers)
               repos = r.json()
+              total_repos += len(repos)
               for repo in repos:
+                  total_stars += repo.get("stargazers_count", 0)
                   langs = requests.get(repo["languages_url"], headers=headers).json()
                   for lang, size in langs.items():
                       language_totals[lang] += size
               repos_url = r.links.get("next", {}).get("url")
 
+          # ---------- Top 6 زبان + Other ----------
           sorted_langs = sorted(language_totals.items(), key=lambda x: x[1], reverse=True)
-          total_bytes = sum(language_totals.values())
-
           top_langs = sorted_langs[:6]
           other_bytes = sum(size for _, size in sorted_langs[6:])
           if other_bytes > 0:
               top_langs.append(("Other", other_bytes))
 
           labels = [lang for lang, _ in top_langs]
-          sizes = [size / total_bytes * 100 for _, size in top_langs]
+          sizes = [size for _, size in top_langs]
 
-          md = "## 🧠 Total Coding Activity (All Repos)\n\n"
+          # ---------- جدول Markdown ----------
+          md = f"## 🧠 GitHub Stats for {USERNAME}\n\n"
+          md += f"- Total Repos: {total_repos}\n"
+          md += f"- Total Stars: {total_stars}\n\n"
           md += "| Language | Usage |\n|----------|-------|\n"
-          for label, percent in zip(labels, sizes):
-              md += f"| {label} | {percent:.2f}% |\n"
+          total_bytes = sum(sizes)
+          for label, size in zip(labels, sizes):
+              md += f"| {label} | {size/total_bytes*100:.2f}% |\n"
+
           with open("LANG_STATS.md", "w") as f:
               f.write(md)
 
+          # ---------- Pie Chart ----------
           plt.style.use('dark_background')
           colors = ['#1f77b4','#ff7f0e','#2ca02c','#d62728','#9467bd','#8c564b','#e377c2']
           plt.figure(figsize=(6,6))
-          plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140, colors=colors[:len(labels)])
-          plt.title("Languages Usage (All Repositories)", color="white")
+          plt.pie([s/total_bytes*100 for s in sizes], labels=labels,
+                  autopct='%1.1f%%', startangle=140, colors=colors[:len(labels)])
+          plt.title(f"{USERNAME} Languages Usage", color="white")
           plt.savefig("lang_chart.svg", format="svg", facecolor='#0d1117', bbox_inches='tight')
           plt.close()
           EOF
 
-      - name: Commit results
+      - name: Commit Cards
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add LANG_STATS.md lang_chart.svg
-          git commit -m "Update GitHub language stats" || echo "No changes"
+          git commit -m "Update GitHub Stats Cards" || echo "No changes"
           git pull --rebase
           git push
