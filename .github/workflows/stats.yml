@@ -1,0 +1,77 @@
+name: Update GitHub Stats
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - run: pip install requests matplotlib
+
+      - name: Generate Stats + Chart
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          python << 'EOF'
+          import requests, os, matplotlib.pyplot as plt
+          from collections import defaultdict
+
+          USERNAME = "arminkhorami"
+          TOKEN = os.environ["GH_TOKEN"]
+          headers = {"Authorization": f"token {TOKEN}"}
+
+          repos_url = "https://api.github.com/user/repos?per_page=100&type=all"
+          language_totals = defaultdict(int)
+
+          while repos_url:
+              r = requests.get(repos_url, headers=headers)
+              repos = r.json()
+
+              for repo in repos:
+                  langs = requests.get(repo["languages_url"], headers=headers).json()
+                  for lang, size in langs.items():
+                      language_totals[lang] += size
+
+              repos_url = r.links.get("next", {}).get("url")
+
+          total = sum(language_totals.values())
+          sorted_langs = sorted(language_totals.items(), key=lambda x: x[1], reverse=True)
+
+          # ---------- Markdown Table ----------
+          md = "## 🧠 Total Coding Activity (All Repos)\n\n"
+          md += "| Language | Usage |\n|----------|-------|\n"
+          labels, sizes = [], []
+
+          for lang, size in sorted_langs:
+              percent = (size / total) * 100
+              md += f"| {lang} | {percent:.2f}% |\n"
+              labels.append(lang)
+              sizes.append(percent)
+
+          with open("LANG_STATS.md", "w") as f:
+              f.write(md)
+
+          # ---------- Pie Chart ----------
+          plt.figure(figsize=(6,6))
+          plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
+          plt.title("Languages Usage (All Repositories)")
+          plt.savefig("lang_chart.svg", format="svg")
+          EOF
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add LANG_STATS.md lang_chart.svg
+          git commit -m "Update GitHub language stats" || echo "No changes"
+          git push
