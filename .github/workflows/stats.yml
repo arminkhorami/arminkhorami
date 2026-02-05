@@ -89,5 +89,8 @@ jobs:
           git config user.email "actions@github.com"
           git add LANG_STATS.md lang_chart.svg
           git commit -m "Update GitHub Stats Cards" || echo "No changes"
-          git pull --rebase
-          git push
+          git push --force
+          - name: Commit Cards
+    
+    
+
