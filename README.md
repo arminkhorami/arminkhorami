@@ -70,9 +70,14 @@
 
 ## 📊 GitHub Stats
 <p align="center">
-<img src="https://github-readme-stats.vercel.app/api?username=arminkhorami&show_icons=true&locale=en" alt="arminkhorami stats"/>
-<img src="https://github-readme-stats.vercel.app/api/top-langs?username=arminkhorami&show_icons=true&locale=en&layout=compact" alt="arminkhorami top langs"/>
- 
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=arminkhorami&theme=github_dark" />
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=arminkhorami&theme=github_dark" />
+
+![Language Chart](lang_chart.svg)
+
+<!-- جدول آمار زبان‌ها -->
+{% include_relative LANG_STATS.md %}
 
 <p align="center">
   <img 
