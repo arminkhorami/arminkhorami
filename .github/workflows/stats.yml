@@ -11,13 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
 
-      - run: pip install requests matplotlib
+      - name: Install dependencies
+        run: pip install requests matplotlib
 
       - name: Generate Stats + Chart
         env:
@@ -69,7 +72,7 @@ jobs:
           plt.savefig("lang_chart.svg", format="svg")
           EOF
 
-          - name: Commit results
+      - name: Commit results
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
@@ -77,4 +80,3 @@ jobs:
           git commit -m "Update GitHub language stats" || echo "No changes"
           git pull --rebase
           git push
-
