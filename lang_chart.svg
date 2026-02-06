@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="710.69802pt" height="280.637813pt" viewBox="0 0 710.69802 280.637813" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="710.697989pt" height="280.637813pt" viewBox="0 0 710.697989 280.637813" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-02-05T19:34:47.724153</dc:date>
+    <dc:date>2026-02-06T01:59:40.437456</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -22,8 +22,8 @@
  <g id="figure_1">
   <g id="patch_1">
    <path d="M 0 280.637813 
-L 710.69802 280.637813 
-L 710.69802 0 
+L 710.697989 280.637813 
+L 710.697989 0 
 L 0 0 
 z
 " style="fill: #0d1117"/>
@@ -31,51 +31,51 @@ z
   <g id="axes_1">
    <g id="patch_2">
     <path d="M 70.855625 273.437813 
-L 692.014177 273.437813 
-L 692.014177 37.837813 
+L 692.014383 273.437813 
+L 692.014383 37.837813 
 L 70.855625 37.837813 
 z
 " style="fill: #0d1117"/>
    </g>
    <g id="patch_3">
     <path d="M 70.855625 262.728722 
-L 74.020496 262.728722 
-L 74.020496 234.791963 
+L 74.019464 262.728722 
+L 74.019464 234.791963 
 L 70.855625 234.791963 
 z
-" clip-path="url(#p337fea05ed)" style="fill: #8b949e"/>
+" clip-path="url(#p89bee84c3e)" style="fill: #8b949e"/>
    </g>
    <g id="patch_4">
     <path d="M 70.855625 216.167457 
-L 78.217704 216.167457 
-L 78.217704 188.230698 
+L 78.215304 216.167457 
+L 78.215304 188.230698 
 L 70.855625 188.230698 
 z
-" clip-path="url(#p337fea05ed)" style="fill: #58a6ff"/>
+" clip-path="url(#p89bee84c3e)" style="fill: #58a6ff"/>
    </g>
    <g id="patch_5">
     <path d="M 70.855625 169.606192 
-L 82.2815 169.606192 
-L 82.2815 141.669433 
+L 82.277774 169.606192 
+L 82.277774 141.669433 
 L 70.855625 141.669433 
 z
-" clip-path="url(#p337fea05ed)" style="fill: #3fb950"/>
+" clip-path="url(#p89bee84c3e)" style="fill: #3fb950"/>
    </g>
    <g id="patch_6">
     <path d="M 70.855625 123.044927 
-L 94.386576 123.044927 
-L 94.386576 95.108168 
+L 94.370894 123.044927 
+L 94.370894 95.108168 
 L 70.855625 95.108168 
 z
-" clip-path="url(#p337fea05ed)" style="fill: #d29922"/>
+" clip-path="url(#p89bee84c3e)" style="fill: #d29922"/>
    </g>
    <g id="patch_7">
     <path d="M 70.855625 76.483662 
-L 662.435199 76.483662 
-L 662.435199 48.546903 
+L 662.435394 76.483662 
+L 662.435394 48.546903 
 L 70.855625 48.546903 
 z
-" clip-path="url(#p337fea05ed)" style="fill: #f85149"/>
+" clip-path="url(#p89bee84c3e)" style="fill: #f85149"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="ytick_1">
@@ -511,7 +511,7 @@ z
    </g>
    <g id="text_6">
     <!-- 0.5% -->
-    <g style="fill: #c9d1d9" transform="translate(80.391129 251.519717) scale(0.1 -0.1)">
+    <g style="fill: #c9d1d9" transform="translate(80.389871 251.519717) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-Bold-30" d="M 2944 2338 
 Q 2944 3213 2780 3570 
@@ -622,7 +622,7 @@ z
    </g>
    <g id="text_7">
     <!-- 1.2% -->
-    <g style="fill: #c9d1d9" transform="translate(84.588337 204.958452) scale(0.1 -0.1)">
+    <g style="fill: #c9d1d9" transform="translate(84.585711 204.958452) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-Bold-31" d="M 750 831 
 L 1813 831 
@@ -669,7 +669,7 @@ z
    </g>
    <g id="text_8">
     <!-- 1.8% -->
-    <g style="fill: #c9d1d9" transform="translate(88.652133 158.397188) scale(0.1 -0.1)">
+    <g style="fill: #c9d1d9" transform="translate(88.648181 158.397188) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-Bold-38" d="M 2228 2088 
 Q 1891 2088 1709 1903 
@@ -719,7 +719,7 @@ z
    </g>
    <g id="text_9">
     <!-- 3.7% -->
-    <g style="fill: #c9d1d9" transform="translate(100.757209 111.835923) scale(0.1 -0.1)">
+    <g style="fill: #c9d1d9" transform="translate(100.741301 111.835923) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-Bold-33" d="M 2981 2516 
 Q 3453 2394 3698 2092 
@@ -772,7 +772,7 @@ z
    </g>
    <g id="text_10">
     <!-- 92.9% -->
-    <g style="fill: #c9d1d9" transform="translate(668.805832 65.274658) scale(0.1 -0.1)">
+    <g style="fill: #c9d1d9" transform="translate(668.805801 65.274658) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-Bold-39" d="M 641 103 
 L 641 966 
@@ -814,7 +814,7 @@ z
    </g>
    <g id="text_11">
     <!-- Most Used Languages by arminkhorami -->
-    <g style="fill: #c9d1d9" transform="translate(242.573495 17.837812) scale(0.14 -0.14)">
+    <g style="fill: #c9d1d9" transform="translate(242.573598 17.837812) scale(0.14 -0.14)">
      <defs>
       <path id="DejaVuSans-73" d="M 2834 3397 
 L 2834 2853 
@@ -1083,8 +1083,8 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p337fea05ed">
-   <rect x="70.855625" y="37.837813" width="621.158552" height="235.6"/>
+  <clipPath id="p89bee84c3e">
+   <rect x="70.855625" y="37.837813" width="621.158758" height="235.6"/>
   </clipPath>
  </defs>
 </svg>
