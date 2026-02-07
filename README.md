@@ -74,9 +74,6 @@
 <img src="https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/profile-3d-contrib/profile-night-green.svg" alt="svg-3d" style="max-width: 70%;" />
 
 
-![3D Contribution](https://cdn.jsdelivr.net/gh/arminkhorami/arminkhorami/profile-3d-contrib/profile-night-green.svg)
-![3D Contribution](https://cdn.jsdelivr.net/gh/arminkhorami/arminkhorami/profile-3d-contrib/profile-night-green-animate.svg)
-
 
 <p align="center">
   <img 
