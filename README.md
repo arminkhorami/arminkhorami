@@ -71,7 +71,7 @@
 <p align="center">
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=arminkhorami&theme=github_dark" />
   
-<img src="https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/profile-3d-contrib/profile-night-green.svg alt="svg-3d" style="max-width: 70%;" />
+<img src="https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/profile-3d-contrib/profile-night-green.svg" alt="svg-3d" style="max-width: 70%;" />
 
 
 ![3D Contribution](https://cdn.jsdelivr.net/gh/arminkhorami/arminkhorami/profile-3d-contrib/profile-night-green.svg)
