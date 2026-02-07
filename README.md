@@ -51,7 +51,7 @@
 
 
 ---
-![Snake](https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/github-ama-grid-snake.svg)
+![Snake](https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/ama-snk-2.svg)
 
 ---
 
