@@ -52,7 +52,6 @@
 
 ---
 ![Snake](https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/ama-snk-2.svg)
-
 ---
 
 ---
@@ -71,7 +70,7 @@
 ## 📊 GitHub Stats
 <p align="center">
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=arminkhorami&theme=github_dark" />
-![3D Contribution](./profile-3d-contrib/profile-green-animate.svg)
+![3D Contribution](https://raw.githubusercontent.com/arminkhorami/arminkhorami/refs/heads/main/profile-3d-contrib/profile-night-green.svg)
 
 
 
