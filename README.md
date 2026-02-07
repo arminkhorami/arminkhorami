@@ -71,7 +71,8 @@
 ## 📊 GitHub Stats
 <p align="center">
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=arminkhorami&theme=github_dark" />
-<img src="https://raw.githubusercontent.com/arminkhorami/arminkhorami/main/lang_chart.svg" alt="Language Stats" />
+![3D Contribution](./profile-3d-contrib/profile-green-animate.svg)
+
 
 
 <p align="center">
