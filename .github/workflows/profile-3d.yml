@@ -6,24 +6,28 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   actions: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
       - uses: yoshi389111/github-profile-3d-contrib@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
 
       - name: Commit & Push
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
           git add -A .
-          if git commit -m "generated"; then
+          if git commit -m "generated 3d contribution charts"; then
             git push
           fi
