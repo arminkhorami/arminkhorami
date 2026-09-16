@@ -17,7 +17,9 @@
 - Contact: **[arminkhorrami@gmail.com](mailto:arminkhorrami@gmail.com)**  
 
 ---
-
+<p align="center">
+  <img src="lang_chart.svg" alt="Languages Bar Chart" width="100%" />
+</p>
 ## 💻 Tech Stack
 
 **Frontend:**  
