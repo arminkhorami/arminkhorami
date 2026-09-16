@@ -60,7 +60,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/languages-top?username=arminkhorami&theme=tokyonight" alt="Top Languages" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/per-lang?username=arminkhorami&theme=tokyonight" alt="Top Languages" />
 </p>
 
 <p align="center">
